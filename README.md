@@ -3,9 +3,11 @@
 An interactive travel website built with **Blazor WebAssembly (.NET 8)**. Pick a country on the world map, explore its food and places, search dishes and sights, check the live weather in 11 capital cities, play two geography games, and plan a trip with a live cost estimate.
 
 > Final project for the C# / Blazor course. Authors: **Shatha Jawas** and **Shahd Jawas**.
-
-**Live demo:** https://5ha7ha.github.io/IFP_Final_World/ 
+<br>
+**Live demo:** https://5ha7ha.github.io/IFP_Final_World/
+<br>
 **Repository:** https://github.com/5ha7ha/IFP_Final_World.git
+<br>
 **Presentation** https://canva.link/9xwka81pxb48hlv 
 
 ---
