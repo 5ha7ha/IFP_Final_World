@@ -12,9 +12,16 @@ public static class TripPlanner
     public static readonly IReadOnlyDictionary<string, int> DailyCost = new Dictionary<string, int>
     {
         ["yemen"] = 50,
-        ["spain"] = 110,
+        ["spain"] = 100,
         ["kazakhstan"] = 70,
-        ["korea"] = 100
+        ["korea"] = 100,
+        ["japan"] = 110,
+        ["germany"] = 120,
+        ["usa"] = 190,
+        ["canada"] = 170,
+        ["russia"] = 90,
+        ["brazil"] = 95,
+        ["saudi"] = 90
     };
 
     public static readonly IReadOnlyList<TravelStyle> Styles = new TravelStyle[]
