@@ -4,11 +4,11 @@ An interactive travel website built with **Blazor WebAssembly (.NET 8)**. Pick a
 
 > Final project for the C# / Blazor course. Authors: **Shatha Jawas** and **Shahd Jawas**.
 <br>
-**Live demo:** https://5ha7ha.github.io/IFP_Final_World/
+Live demo: https://5ha7ha.github.io/IFP_Final_World/
 <br>
-**Repository:** https://github.com/5ha7ha/IFP_Final_World.git
+Repository: https://github.com/5ha7ha/IFP_Final_World.git
 <br>
-**Presentation** https://canva.link/9xwka81pxb48hlv 
+Presentation: https://canva.link/9xwka81pxb48hlv 
 
 ---
 
