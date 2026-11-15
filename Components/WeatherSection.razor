@@ -3,18 +3,25 @@
     <div class="weather-grid">
         @foreach (var place in _places)
         {
-            <WeatherCard Name="@place.Name" Latitude="place.Latitude" Longitude="place.Longitude" />
+            <WeatherCard Name="@place.Name" Latitude="@place.Latitude" Longitude="@place.Longitude" />
         }
     </div>
-    <p class="source">Data: Open-Meteo. Cities: Sana'a, Madrid, Astana, Seoul.</p>
+    <p class="source">Data: Open-Meteo. Weather is shown for the capital city of each country.</p>
 </section>
 
 @code {
     private static readonly WeatherLocation[] _places =
     {
-        new("Yemen", 15.37, 44.19),
-        new("Spain", 40.42, -3.70),
-        new("Kazakhstan", 51.17, 71.45),
-        new("Korea", 37.57, 126.98),
+        new("Yemen", 15.37, 44.19),            // Sana'a
+        new("Spain", 40.42, -3.70),            // Madrid
+        new("Kazakhstan", 51.17, 71.45),       // Astana
+        new("Korea", 37.57, 126.98),           // Seoul
+        new("Japan", 35.68, 139.65),           // Tokyo
+        new("Germany", 52.52, 13.40),          // Berlin
+        new("United States", 38.91, -77.04),   // Washington, D.C.
+        new("Canada", 45.42, -75.70),          // Ottawa
+        new("Russia", 55.76, 37.62),           // Moscow
+        new("Brazil", -15.79, -47.88),         // Brasília
+        new("Saudi Arabia", 24.71, 46.68),     // Riyadh
     };
 }

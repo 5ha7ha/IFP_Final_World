@@ -1,4 +1,5 @@
 @inject IJSRuntime JS
+@inject GameState State
 
 <section id="quiz">
     <h2>Test your knowledge Quiz!!</h2>
@@ -52,7 +53,7 @@
 </section>
 
 @code {
-    private readonly QuizEngine _quiz = new();
+    private QuizEngine _quiz => State.Quiz;
     private string? _focusId;   // element to focus after the next render
 
     private string Hearts =>

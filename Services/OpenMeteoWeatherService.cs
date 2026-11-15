@@ -7,6 +7,7 @@ namespace TravelTheWorld.Services;
 public sealed class OpenMeteoWeatherService : IWeatherService
 {
     private readonly HttpClient _http;
+    private static readonly Dictionary<string, (DateTime At, WeatherInfo Info)> Cache = new();
 
     public OpenMeteoWeatherService(HttpClient http) => _http = http;
 
@@ -17,6 +18,11 @@ public sealed class OpenMeteoWeatherService : IWeatherService
         var url = FormattableString.Invariant(
             $"v1/forecast?latitude={latitude}&longitude={longitude}&current=temperature_2m,weather_code");
 
+        if (Cache.TryGetValue(url, out var hit) && DateTime.UtcNow - hit.At < TimeSpan.FromMinutes(10))
+        {
+            return hit.Info;
+        }
+
         var response = await _http.GetFromJsonAsync<OpenMeteoResponse>(url, cancellationToken);
         if (response?.Current is null)
         {
@@ -24,7 +30,9 @@ public sealed class OpenMeteoWeatherService : IWeatherService
         }
 
         var (icon, description) = WeatherCodes.Describe(response.Current.WeatherCode);
-        return new WeatherInfo(response.Current.Temperature, icon, description);
+        var info = new WeatherInfo(response.Current.Temperature, icon, description);
+        Cache[url] = (DateTime.UtcNow, info);
+        return info;
     }
 
     // Shape of the part of the Open-Meteo response we use.

@@ -1,3 +1,4 @@
+@inject GameState State
 <section id="game">
     <h1>Higher or Lower: Population</h1>
     <p>Does the next country have a higher or lower population? You have 3 lives!</p>
@@ -41,5 +42,5 @@
 </section>
 
 @code {
-    private readonly HigherLowerEngine _game = new();
+   private HigherLowerEngine _game => State.HigherLower;
 }

@@ -114,7 +114,7 @@ public sealed class InMemoryCountryRepository : ICountryRepository
         new()
         {
             Key = "canada", Name = "Canada", Capital = "Ottawa", Languages = new[] { "English", "French" },
-            Currency = "Canadian Dollar", Population = 41,
+            Currency = "Canadian Dollar", Population = 40,
             Flag = "img/Canada/canadaFlag.png", Map = "img/Canada/canada-map-bg.webp",
             Accent = "#d52b1e", HeroBg = "#1a1212", HeroGlow = "rgba(213, 43, 30, 0.4)",
             Quote = new("\"Petit à petit, l'oiseau fait son nid.\"", "fr", "ltr"),
@@ -144,7 +144,7 @@ public sealed class InMemoryCountryRepository : ICountryRepository
         new()
         {
             Key = "brazil", Name = "Brazil", Capital = "Brasília", Languages = new[] { "Portuguese" },
-            Currency = "Real", Population = 212,
+            Currency = "Real", Population = 217,
             Flag = "img/Brazil/brazilFlag.webp", Map = "img/Brazil/brazil-map-bg.svg",
             Accent = "#009c3b", HeroBg = "#0f1a14", HeroGlow = "rgba(255, 223, 0, 0.35)",
             Quote = new("\"Água mole em pedra dura, tanto bate até que fura.\"", "pt", "ltr"),
@@ -159,7 +159,7 @@ public sealed class InMemoryCountryRepository : ICountryRepository
         new()
         {
             Key = "saudi", Name = "Saudi Arabia", Capital = "Riyadh", Languages = new[] { "Arabic" },
-            Currency = "Riyal", Population = 35,
+            Currency = "Riyal", Population = 36,
             Flag = "img/Saudi/saudiFlag.webp", Map = "img/Saudi/saudi-map-bg.svg",
             Accent = "#006c35", HeroBg = "#101a14", HeroGlow = "rgba(0, 108, 53, 0.45)",
             Quote = new("\"من جدّ وجد، ومن زرع حصد\"", "ar", "rtl"),

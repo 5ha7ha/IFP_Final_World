@@ -39,7 +39,7 @@
             _weather = await Weather.GetCurrentAsync(Latitude, Longitude, _cts.Token);
             _failed = _weather is null;
         }
-        catch (OperationCanceledException)
+        catch (OperationCanceledException) when (_cts.IsCancellationRequested)
         {
             // Component was removed while the request was in flight; nothing to show.
         }
