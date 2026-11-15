@@ -1,0 +1,27 @@
+name: Deploy to GitHub Pages
+on:
+  push:
+    branches: [ main ]
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+      - run: dotnet publish TravelTheWorld.csproj -c Release -o release
+      - run: sed -i 's|<base href="/" />|<base href="/IFP_Final_World/" />|' release/wwwroot/index.html
+      - run: cp release/wwwroot/index.html release/wwwroot/404.html
+      - run: touch release/wwwroot/.nojekyll
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: release/wwwroot
+      - uses: actions/deploy-pages@v4
+      
