@@ -1,0 +1,587 @@
+@import url("https://fonts.googleapis.com/css2?family=Alegreya+Sans:wght@400;500;700;800&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Amarante&display=swap');
+
+
+:root{
+    --bg: #DFF1F1;
+    --panel-1: #1d3b3d;
+    --text-color: #ffffff;
+    --footer: #9aa0aa;
+    --firooze: #2f6f73;
+    --firooze-light: #00A6A6;
+    --mist: var(--bg);              /* same teal as --bg; quiz.css uses this name */
+    --error: #c8102e;
+    --success: #1f7a4d;
+}
+
+body{
+    background-color: var(--bg);
+    font-family: "Amarante", "Alegreya Sans", "Segoe UI", sans-serif;
+    color: var(--panel-1);
+    margin: 0;
+    padding: 0;
+}
+
+#nav-brand {
+    font-family: "Corinthia", cursive;
+    font-weight: 500;
+    font-size: 1.5rem;
+     line-height: 1;                    /* the script font has a tall line box */
+}
+.navbar-brand img {
+    width: 32px;
+    height: 32px;
+
+}
+
+/* Navbar: hover, keyboard focus and current page (colors come from Bootstrap's navbar variables) */
+.navbar {
+    --bs-navbar-color: var(--panel-1);
+    --bs-navbar-hover-color: var(--firooze);
+    --bs-navbar-active-color: var(--firooze);
+    --bs-navbar-padding-y: 0;          /* removes the top/bottom padding of the bar */
+    margin-bottom: 0;
+}
+.navbar .nav-link {
+    position: relative;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.navbar .nav-link.active {
+    font-weight: 700;
+    background-color: #c6dede;
+}
+
+/* map */
+#map{
+    background-color: var(--firooze);   /* #2f6f73, a lighter teal than before */
+    padding: 30px 20px 40px;
+    color: white;
+}
+.map-container{
+    max-width: 760px;   /* was 1000px, so the map is smaller */
+    margin: 0 auto;
+}
+#map h1{
+    font-family:  "Amarante", cursive;
+    text-align: center;
+    font-size: 2.5rem;
+    margin: 0 0 10px;
+}
+#map p{
+    font-family:  "Amarante", cursive;
+    text-align: center;
+    font-size: 1.2rem;
+    margin: 0 0 20px;
+}
+.world-map{
+    display: block;        
+    width: 100%;
+    aspect-ratio: 784 / 459;
+    height: auto;
+}
+
+/* Weather Section */
+#weather {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 0 16px;
+    text-align: center;
+}
+
+.weather-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+}
+
+.weather-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+    transition: transform 0.2s;
+}
+
+.weather-card:hover {
+    transform: translateY(-5px);
+}
+
+.weather-card h3 {
+    color: #2f6f73;
+}
+
+.weather-card .icon {
+    font-size: 2.5rem;
+    margin: 0;
+}
+
+.weather-card .temp {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 0;
+}
+
+.source {
+    font-size: 0.85rem;
+    margin-top: 1rem;
+}
+
+
+
+
+
+/* Facts Table */
+#many {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.9)),
+                    url('../img/city.jpg');
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  padding-bottom: 60px;
+}
+
+.facts {
+    width: 100%;
+    max-width: 600px;
+    margin: 2rem auto 1rem;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 12px;
+    overflow: hidden;                     /* keeps the rounded corners */
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+    background: transparent;                        /* allows the background image to show through */
+}
+
+.facts th,
+.facts td {
+    padding: 14px 18px;
+    text-align: left;
+    border-bottom: 1px solid #cfe3e3;
+}
+
+.facts th {
+    width: 50%;
+    font-weight: 600;
+    background-color: rgba(47, 111, 115, 0.35);   /* teal, 35% visible */
+    color: white;
+    backdrop-filter: blur(6px);  
+}
+
+.facts td {
+    font-weight: 500;
+    background-color: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(6px);
+}
+
+.facts tr:nth-child(even) td {
+    background-color: rgba(234, 245, 245, 0.7);;
+}
+
+.facts tr:last-child th,
+.facts tr:last-child td {
+    border-bottom: none;
+}
+
+.facts tr:hover td {
+    background-color: rgba(207, 231, 231, 0.85);
+}
+
+#many h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    font-size: 1.8rem;
+    color: white;
+}
+.note {
+    max-width: 600px;
+    margin: 1rem auto;
+    padding: 12px 16px;
+    border-left: 4px solid var(--firooze);
+    background-color: rgba(255, 255, 255, 0.55);;
+    border-radius: 6px;
+}
+
+
+/* ===== Plan My Trip page ===== */
+.plan-intro {
+    text-align: center;
+    padding: 2.5rem 1rem 1.5rem;
+}
+
+.plan-intro h1 {
+    color: var(--firooze);
+    font-weight: 700;
+    font-size: 2.4rem;
+}
+
+.plan-intro p {
+    font-size: 1.15rem;
+    max-width: 36rem;
+    margin: 0.5rem auto 0;
+}
+
+.plan-layout {
+    padding-bottom: 3rem;
+}
+
+/* cards */
+.plan-card {
+    background: #fff;
+    border-radius: 1.25rem;
+    padding: 1.5rem;
+    box-shadow: 0 6px 18px rgba(29, 59, 61, 0.12);
+}
+
+.plan-card h2 {
+    color: var(--firooze);
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+/* form fields */
+.form-label {
+    font-weight: 700;
+}
+
+.form-control,
+.form-select {
+    border: 2px solid #b9d6d6;
+    border-radius: 0.75rem;
+    padding: 0.6rem 0.8rem;
+    font-family: inherit;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-control:hover,
+.form-select:hover {
+    border-color: var(--firooze-light);
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--firooze);
+    box-shadow: 0 0 0 0.25rem rgba(0, 166, 166, 0.3);
+}
+
+/* error and valid states */
+.form-control.is-invalid,
+.form-select.is-invalid {
+    border-color: var(--error);
+    background-image: none;
+}
+
+.form-control.is-invalid:focus,
+.form-select.is-invalid:focus {
+    box-shadow: 0 0 0 0.25rem rgba(200, 16, 46, 0.25);
+}
+
+.form-control.is-valid,
+.form-select.is-valid {
+    border-color: var(--success);
+    background-image: none;
+}
+
+.invalid-feedback {
+    color: var(--error);
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+/* buttons */
+.plan-btn,
+.plan-btn-outline {
+    border-radius: 0.75rem;
+    padding: 0.6rem 1.5rem;
+    font-weight: 700;
+    font-family: inherit;
+    transition: transform 0.2s, background-color 0.2s, box-shadow 0.2s;
+}
+
+.plan-btn {
+    background: var(--firooze);
+    border: 2px solid var(--firooze);
+    color: #fff;
+}
+
+.plan-btn:hover {
+    background: var(--firooze-light);
+    border-color: var(--firooze-light);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.plan-btn-outline {
+    background: transparent;
+    border: 2px solid var(--firooze);
+    color: var(--firooze);
+}
+
+.plan-btn-outline:hover {
+    background: var(--firooze);
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+.plan-btn:focus-visible,
+.plan-btn-outline:focus-visible {
+    outline: 3px solid var(--panel-1);
+    outline-offset: 3px;
+}
+
+/* summary card */
+.summary-card {
+    position: sticky;
+    top: 1rem;
+    border-top: 6px solid var(--firooze-light);
+}
+
+.summary-flag {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.summary-flag img {
+    width: 90px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid var(--firooze);
+}
+
+.summary-flag p {
+    margin: 0.5rem 0 0;
+    font-weight: 700;
+}
+
+.summary-empty {
+    text-align: center;
+    font-style: italic;
+}
+
+.summary-list div {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.4rem 0;
+    border-bottom: 1px dashed #b9d6d6;
+}
+
+.summary-list dt {
+    font-weight: 700;
+}
+
+.summary-list dd {
+    margin: 0;
+    text-align: right;
+}
+
+.summary-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    font-size: 1.2rem;
+}
+
+.summary-total strong {
+    color: var(--firooze);
+    font-size: 2rem;
+}
+
+.summary-note {
+    font-size: 0.9rem;
+    margin: 0.5rem 0 0;
+}
+
+/* passport stamp success message */
+.stamp-wrap {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.stamp-wrap[hidden] {
+    display: none;
+}
+
+.stamp {
+    background: #fff;
+    border: 4px double var(--firooze);
+    border-radius: 1.25rem;
+    padding: 1.5rem 2rem;
+    text-align: center;
+    max-width: 34rem;
+    width: 100%;
+    transform: rotate(-2deg);
+    box-shadow: 0 8px 20px rgba(29, 59, 61, 0.18);
+}
+
+.stamp img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid var(--firooze);
+}
+
+.stamp h2 {
+    color: var(--success);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin: 0.75rem 0 0.5rem;
+}
+
+/* Footer */
+footer{
+  background: var(--panel-1);
+  color: var(--footer);
+  text-align: center;
+  padding: 1rem;
+  margin-top: 0;
+}
+footer p { margin-bottom: 0.35rem; }
+footer p:last-child { margin-bottom: 0; }
+footer .credits {
+    font-size: 0.8rem;
+    color: #aeb6bd;      /* lighter than the footer gray so the small text stays readable */
+}
+
+/* ===== Search section ===== */
+#search {
+    max-width: 1000px;
+    margin: 2rem auto;
+    padding: 0 16px;
+}
+
+#search h2 {
+    text-align: center;
+    color: var(--firooze);
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.search-bar {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+}
+
+.search-count {
+    text-align: center;
+    font-weight: 700;
+    margin: 1rem 0;
+}
+
+.search-results {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+}
+
+.search-card {
+    background: #fff;
+    border-radius: 12px;
+    border-top: 5px solid var(--firooze-light);
+    overflow: hidden;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.search-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.search-card img {
+    display: block;
+    width: 100%;
+    height: 170px;
+    object-fit: cover;
+}
+
+.search-card h3,
+.search-card p,
+.search-card a,
+.search-badge {
+    margin: 0;
+    padding: 0.5rem 1rem 0;
+}
+
+.search-badge {
+    display: block;
+    color: var(--firooze);
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+.search-card a {
+    display: inline-block;
+    padding-bottom: 1rem;
+    font-weight: 700;
+    color: var(--firooze);
+}
+
+
+/* ============================================
+   RESPONSIVE: mobile first
+   Base styles above = PHONES (375px and up)
+   ============================================ */
+
+/* TABLET: 768px and wider */
+@media (min-width: 768px) {
+    .plan-intro h1 {
+        font-size: 3rem;
+    }
+
+    .plan-card {
+        padding: 2rem;
+    }
+
+    #nav-brand {
+        font-weight: 800;
+        font-size: 1.8rem;
+    }
+
+    .navbar-brand img {
+        width: 34px;
+        height: 34px;
+    }
+
+    .weather-grid {
+        grid-template-columns: repeat(2, 1fr);   /* 2 x 2 */
+    }
+
+    .facts th,
+    .facts td {
+        padding: 14px 18px;
+        font-size: 1rem;
+    }
+
+    .search-bar { grid-template-columns: 2fr 1fr; }
+    .search-results { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* LAPTOP: 1024px and wider */
+@media (min-width: 1024px) {
+    #weather {
+        max-width: 1100px;
+    }
+
+    .weather-grid {
+        grid-template-columns: repeat(4, 1fr);   /* 4 in a row */
+    }
+
+    .search-results { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        transition: none !important;
+    }
+}

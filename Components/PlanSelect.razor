@@ -1,0 +1,26 @@
+<label for="@Id" class="form-label">@Label</label>
+<select class="@CssClass" id="@Id" name="@Id" @onchange="HandleChange">
+    <option value="" selected="@string.IsNullOrEmpty(Value)">@Placeholder</option>
+    @foreach (var option in Options)
+    {
+        <option value="@option.Key" selected="@(option.Key == Value)">@option.Value</option>
+    }
+</select>
+<div class="invalid-feedback" id="@(Id + "Error")">@Error</div>
+
+@code {
+    [Parameter, EditorRequired] public string Id { get; set; } = "";
+    [Parameter, EditorRequired] public string Label { get; set; } = "";
+    [Parameter] public string Placeholder { get; set; } = "Choose";
+    [Parameter, EditorRequired] public IReadOnlyList<KeyValuePair<string, string>> Options { get; set; } = Array.Empty<KeyValuePair<string, string>>();
+
+    [Parameter] public string Value { get; set; } = "";
+    [Parameter] public string Error { get; set; } = "";
+    [Parameter] public bool Validated { get; set; }
+    [Parameter] public EventCallback<string> OnInput { get; set; }
+
+    private string CssClass =>
+        "form-select" + (Validated ? (string.IsNullOrEmpty(Error) ? " is-valid" : " is-invalid") : "");
+
+    private Task HandleChange(ChangeEventArgs e) => OnInput.InvokeAsync(e.Value?.ToString() ?? "");
+}

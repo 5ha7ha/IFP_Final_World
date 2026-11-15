@@ -1,0 +1,9 @@
+<a href="@Country.Page" class="flag-link">
+    <img src="@Country.Flag" alt="Flag of @Country.Name" />
+    <span>@Country.Name</span>
+</a>
+
+@code {
+    [Parameter, EditorRequired]
+    public Country Country { get; set; } = default!;
+}

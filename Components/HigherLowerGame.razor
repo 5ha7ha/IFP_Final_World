@@ -1,0 +1,45 @@
+<section id="game">
+    <h1>Higher or Lower: Population</h1>
+    <p>Does the next country have a higher or lower population? You have 3 lives!</p>
+    <div class="quiz-card">
+        <div class="@("game-board" + (_game.GameOver ? " game-over" : ""))" id="gameBoard">
+            <div class="game-stats">
+                <p>Lives: <span id="lives">@_game.Lives</span></p>
+                <p>Streak: <span id="streak">@_game.Streak</span></p>
+                <p>Best streak: <span id="best">@_game.BestStreak</span></p>
+            </div>
+
+            <div class="row g-3 align-items-center justify-content-center game-cards">
+                <div class="col-12 col-md-5">
+                    <div class="game-card">
+                        <h2 id="currentName">@_game.Current.Name</h2>
+                        <p class="game-value" id="currentValue">@_game.Current.Million million</p>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-2 game-vs">VS</div>
+
+                <div class="col-12 col-md-5">
+                    <div class="game-card">
+                        <h2 id="nextName">@_game.Next.Name</h2>
+                        <p class="game-value" id="nextValue">?</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p id="gameQuestion" class="game-question">@_game.Question</p>
+
+        <div id="gameControls" class="game-controls">
+            <button type="button" class="game-btn" id="higherBtn" @onclick="() => _game.Guess(true)">Higher ▲</button>
+            <button type="button" class="game-btn" id="lowerBtn" @onclick="() => _game.Guess(false)">Lower ▼</button>
+        </div>
+
+        <p id="gameMessage" class="@_game.MessageClass">@_game.Message</p>
+
+        <button type="button" id="restartBtn" class="game-btn game-restart" @onclick="_game.Restart">Restart</button>
+    </div>
+</section>
+
+@code {
+    private readonly HigherLowerEngine _game = new();
+}

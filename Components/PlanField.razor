@@ -1,0 +1,31 @@
+<label for="@Id" class="form-label">@Label</label>
+<input type="@Type" class="@CssClass" id="@Id" name="@Id" placeholder="@Placeholder"
+       autocomplete="@Autocomplete" min="@Min" max="@Max"
+       value="@Value" @oninput="HandleInput" @onblur="HandleBlur" />
+<div class="invalid-feedback" id="@(Id + "Error")">@Error</div>
+
+@code {
+    [Parameter, EditorRequired] public string Id { get; set; } = "";
+    [Parameter, EditorRequired] public string Label { get; set; } = "";
+    [Parameter] public string Type { get; set; } = "text";
+    [Parameter] public string? Placeholder { get; set; }
+    [Parameter] public string? Autocomplete { get; set; }
+    [Parameter] public string? Min { get; set; }
+    [Parameter] public string? Max { get; set; }
+
+    [Parameter] public string Value { get; set; } = "";
+    [Parameter] public string Error { get; set; } = "";
+
+    /// <summary>True once the field has been checked, so it shows green or red.</summary>
+    [Parameter] public bool Validated { get; set; }
+
+    [Parameter] public EventCallback<string> OnInput { get; set; }
+    [Parameter] public EventCallback OnBlur { get; set; }
+
+    private string CssClass =>
+        "form-control" + (Validated ? (string.IsNullOrEmpty(Error) ? " is-valid" : " is-invalid") : "");
+
+    private Task HandleInput(ChangeEventArgs e) => OnInput.InvokeAsync(e.Value?.ToString() ?? "");
+
+    private Task HandleBlur() => OnBlur.InvokeAsync();
+}

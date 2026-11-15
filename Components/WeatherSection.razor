@@ -1,0 +1,20 @@
+<section id="weather">
+    <h2>Weather right now</h2>
+    <div class="weather-grid">
+        @foreach (var place in _places)
+        {
+            <WeatherCard Name="@place.Name" Latitude="place.Latitude" Longitude="place.Longitude" />
+        }
+    </div>
+    <p class="source">Data: Open-Meteo. Cities: Sana'a, Madrid, Astana, Seoul.</p>
+</section>
+
+@code {
+    private static readonly WeatherLocation[] _places =
+    {
+        new("Yemen", 15.37, 44.19),
+        new("Spain", 40.42, -3.70),
+        new("Kazakhstan", 51.17, 71.45),
+        new("Korea", 37.57, 126.98),
+    };
+}

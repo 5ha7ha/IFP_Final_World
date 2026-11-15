@@ -1,0 +1,261 @@
+@page "/plan"
+@using System.Globalization
+@inject ICountryRepository Repository
+@inject IJSRuntime JS
+
+<PageTitle>Plan My Trip | Travel the World</PageTitle>
+
+<header class="plan-intro">
+    <h1>Plan My Trip</h1>
+    <p>Fill in the details and watch your trip take shape. We will estimate the cost for you.</p>
+</header>
+
+<div class="container plan-layout">
+    <div class="row g-4">
+
+        <!-- FORM -->
+        <section class="col-12 col-lg-7" aria-labelledby="formTitle">
+            <div class="plan-card">
+                <h2 id="formTitle">Your trip details</h2>
+
+                <form id="tripForm" novalidate @onsubmit="SubmitAsync" @onsubmit:preventDefault>
+                    <div class="mb-3">
+                        <PlanField Id="fullName" Label="Full name" Placeholder="e.g. Aisha Karim" Autocomplete="name"
+                                   Value="@Val("fullName")" Error="@Err("fullName")" Validated="@IsChecked("fullName")"
+                                   OnInput="@(v => FieldInput("fullName", v))" OnBlur="@(() => FieldBlur("fullName"))" />
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 col-md-6 mb-3">
+                            <PlanField Id="email" Label="Email" Type="email" Placeholder="name@example.com" Autocomplete="email"
+                                       Value="@Val("email")" Error="@Err("email")" Validated="@IsChecked("email")"
+                                       OnInput="@(v => FieldInput("email", v))" OnBlur="@(() => FieldBlur("email"))" />
+                        </div>
+                        <div class="col-12 col-md-6 mb-3">
+                            <PlanField Id="phone" Label="Phone" Type="tel" Placeholder="+7 701 123 4567" Autocomplete="tel"
+                                       Value="@Val("phone")" Error="@Err("phone")" Validated="@IsChecked("phone")"
+                                       OnInput="@(v => FieldInput("phone", v))" OnBlur="@(() => FieldBlur("phone"))" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 col-md-6 mb-3">
+                            <PlanSelect Id="destination" Label="Destination" Placeholder="Choose a country"
+                                        Options="_destinationOptions"
+                                        Value="@Val("destination")" Error="@Err("destination")" Validated="@IsChecked("destination")"
+                                        OnInput="@(v => FieldInput("destination", v))" />
+                        </div>
+                        <div class="col-12 col-md-6 mb-3">
+                            <PlanSelect Id="tripStyle" Label="Travel style" Placeholder="Choose a style"
+                                        Options="_styleOptions"
+                                        Value="@Val("tripStyle")" Error="@Err("tripStyle")" Validated="@IsChecked("tripStyle")"
+                                        OnInput="@(v => FieldInput("tripStyle", v))" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 col-md-4 mb-3">
+                            <PlanField Id="startDate" Label="Start date" Type="date" Min="@_minDate"
+                                       Value="@Val("startDate")" Error="@Err("startDate")" Validated="@IsChecked("startDate")"
+                                       OnInput="@(v => FieldInput("startDate", v))" OnBlur="@(() => FieldBlur("startDate"))" />
+                        </div>
+                        <div class="col-6 col-md-4 mb-3">
+                            <PlanField Id="days" Label="Days" Type="number" Min="1" Max="30" Placeholder="1-30"
+                                       Value="@Val("days")" Error="@Err("days")" Validated="@IsChecked("days")"
+                                       OnInput="@(v => FieldInput("days", v))" OnBlur="@(() => FieldBlur("days"))" />
+                        </div>
+                        <div class="col-6 col-md-4 mb-3">
+                            <PlanField Id="travelers" Label="Travelers" Type="number" Min="1" Max="10" Placeholder="1-10"
+                                       Value="@Val("travelers")" Error="@Err("travelers")" Validated="@IsChecked("travelers")"
+                                       OnInput="@(v => FieldInput("travelers", v))" OnBlur="@(() => FieldBlur("travelers"))" />
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn plan-btn" id="submitBtn">Book my trip</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- LIVE SUMMARY -->
+        <aside class="col-12 col-lg-5" aria-labelledby="summaryTitle">
+            <div class="plan-card summary-card" id="summaryCard">
+                <h2 id="summaryTitle">Trip summary</h2>
+
+                @if (Destination is { } destination)
+                {
+                    <div class="summary-flag" id="summaryFlag">
+                        <img id="summaryFlagImg" src="@destination.Flag" alt="Flag of @destination.Name">
+                        <p id="summaryCapital">@destination.Capital · @destination.Currency</p>
+                    </div>
+                }
+                else
+                {
+                    <p class="summary-empty" id="summaryEmpty">Choose a destination to see your summary.</p>
+                }
+
+                <dl class="summary-list">
+                    <div><dt>Destination</dt><dd id="sumDestination">@(Destination?.Name ?? "-")</dd></div>
+                    <div><dt>Style</dt><dd id="sumStyle">@(Style?.Name ?? "-")</dd></div>
+                    <div><dt>Dates</dt><dd id="sumDates">@DatesText</dd></div>
+                    <div><dt>Travelers</dt><dd id="sumTravelers">@(Travelers > 0 ? Travelers.ToString() : "-")</dd></div>
+                </dl>
+
+                <div class="summary-total">
+                    <span>Estimated cost</span>
+                    <strong id="sumTotal">@TotalText</strong>
+                </div>
+                <p class="summary-note">Estimate only: daily price × days × travelers × style. Demo website, nothing is charged.</p>
+            </div>
+        </aside>
+    </div>
+
+    <!-- SUCCESS STAMP -->
+    @if (_booking is not null)
+    {
+        <section class="stamp-wrap reveal-slide" id="successBox" aria-live="polite">
+            <div class="stamp">
+                <img id="stampFlag" src="@_booking.Destination.Flag" alt="Flag of @_booking.Destination.Name">
+                <h2>Trip booked!</h2>
+                <p id="stampText">@_booking.Text</p>
+                <div class="d-flex flex-wrap gap-2 justify-content-center">
+                    <a id="stampLink" class="btn plan-btn" href="@_booking.Destination.Page">Read about the country</a>
+                    <button type="button" class="btn plan-btn-outline" id="againBtn" @onclick="PlanAnotherAsync">Plan another trip</button>
+                </div>
+            </div>
+        </section>
+    }
+</div>
+
+@code {
+    private sealed record Booking(Country Destination, string Text);
+
+    // country.html links here with plan?c=korea, so the country is already chosen
+    [SupplyParameterFromQuery(Name = "c")]
+    public string? Preselected { get; set; }
+
+    private readonly Dictionary<string, string> _values = TripPlanner.FieldNames.ToDictionary(n => n, _ => "");
+    private readonly Dictionary<string, string> _errors = new();
+    private readonly HashSet<string> _checked = new();
+
+    private IReadOnlyList<KeyValuePair<string, string>> _destinationOptions = Array.Empty<KeyValuePair<string, string>>();
+    private IReadOnlyList<KeyValuePair<string, string>> _styleOptions = Array.Empty<KeyValuePair<string, string>>();
+    private string _minDate = "";   // the start date cannot be today or in the past
+    private Booking? _booking;
+    private bool _scrollToBooking;
+
+    protected override void OnInitialized()
+    {
+        // only countries that have a price can be planned
+        _destinationOptions = Repository.Countries
+            .Where(c => TripPlanner.DailyCost.ContainsKey(c.Key))
+            .Select(c => KeyValuePair.Create(c.Key, c.Name))
+            .ToList();
+        _styleOptions = TripPlanner.Styles
+            .Select(s => KeyValuePair.Create(s.Key, s.Name))
+            .ToList();
+
+        _minDate = DateTime.Today.AddDays(1).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+
+        if (_destinationOptions.Any(o => o.Key == Preselected))
+        {
+            _values["destination"] = Preselected!;
+        }
+    }
+
+    // ----- small helpers used by the markup -----
+    private string Val(string name) => _values[name];
+    private string Err(string name) => _errors.TryGetValue(name, out var e) ? e : "";
+    private bool IsChecked(string name) => _checked.Contains(name);
+
+    private void Validate(string name)
+    {
+        _errors[name] = TripPlanner.Validate(name, _values[name], DateTime.Today);
+        _checked.Add(name);
+    }
+
+    // a field that was already checked is re-checked while the user types,
+    // so the error disappears as soon as the value is correct
+    private void FieldInput(string name, string value)
+    {
+        _values[name] = value;
+        if (_checked.Contains(name)) Validate(name);
+    }
+
+    private void FieldBlur(string name)
+    {
+        if (_values[name] != "") Validate(name);
+    }
+
+    // ----- values for the live summary -----
+    private Country? Destination => Repository.FindCountry(_values["destination"]);
+    private TravelStyle? Style => TripPlanner.FindStyle(_values["tripStyle"]);
+    private int Days => int.TryParse(_values["days"], out var d) ? d : 0;
+    private int Travelers => int.TryParse(_values["travelers"], out var t) ? t : 0;
+    private int Total => TripPlanner.CalculateTotal(Destination?.Key, Style?.Key, Days, Travelers);
+    private string TotalText => "$" + Total.ToString("N0", CultureInfo.InvariantCulture);
+
+    private static bool TryParseDate(string value, out DateTime date) =>
+        DateTime.TryParseExact(value, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out date);
+
+    private static string FormatDate(DateTime date) => date.ToString("d MMM yyyy", CultureInfo.InvariantCulture);
+
+    private string DatesText
+    {
+        get
+        {
+            if (!TryParseDate(_values["startDate"], out var start)) return "-";
+            var text = FormatDate(start);
+            if (Days > 0) text += " to " + FormatDate(start.AddDays(Days - 1));
+            return text;
+        }
+    }
+
+    // ----- submit -----
+    private async Task SubmitAsync()
+    {
+        string? firstInvalid = null;
+        foreach (var name in TripPlanner.FieldNames)
+        {
+            Validate(name);
+            if (firstInvalid is null && _errors[name] != "") firstInvalid = name;
+        }
+
+        if (firstInvalid is not null)
+        {
+            await JS.TryInvokeVoidAsync("travelUi.focusId", firstInvalid);
+            return;
+        }
+
+        var destination = Destination!;
+        var days = Days;
+        var travelers = Travelers;
+        var firstName = _values["fullName"].Trim().Split(' ')[0];
+
+        var text = $"Thank you, {firstName}! {days} days in {destination.Name} for {travelers} " +
+                   $"{(travelers == 1 ? "traveler" : "travelers")}. Estimated cost: {TotalText}.";
+        _booking = new Booking(destination, text);
+
+        // clear the form and the summary
+        foreach (var name in TripPlanner.FieldNames) _values[name] = "";
+        _errors.Clear();
+        _checked.Clear();
+
+        _scrollToBooking = true;
+    }
+
+    private async Task PlanAnotherAsync()
+    {
+        _booking = null;
+        await JS.TryInvokeVoidAsync("travelUi.scrollTop");
+        await JS.TryInvokeVoidAsync("travelUi.focusId", "fullName");
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (_scrollToBooking)
+        {
+            _scrollToBooking = false;
+            await JS.TryInvokeVoidAsync("travelUi.scrollToId", "successBox", 80);
+        }
+    }
+}

@@ -1,0 +1,32 @@
+<section id="many">
+    <h2>How many ________ in the world?</h2>
+
+    <table class="facts">
+        @foreach (var fact in _facts)
+        {
+            <tr>
+                <th>@fact.Label</th>
+                <td>@fact.Value</td>
+            </tr>
+        }
+    </table>
+
+    <div class="note">
+        <p><strong>Note:</strong> There are 7,170 living languages spoken in the world today. However, linguistic diversity is heavily concentrated. Just the top 20 languages are spoken by more than half of the entire global population. Conversely, about 44% of the world's languages are considered endangered, often spoken by fewer than 1,000 people.</p>
+    </div>
+</section>
+
+@code {
+    private static readonly Fact[] _facts =
+    {
+        new("Countries", "195"),
+        new("Languages", "7100+"),
+        new("Continents", "7"),
+        new("Oceans", "5"),
+        new("Currencies in use", "about 180"),
+        new("People on Earth", "about 8 billion"),
+        new("Largest country", "Russia"),
+        new("Smallest country", "Vatican City"),
+        new("Most visited country", "France"),
+    };
+}

@@ -1,0 +1,156 @@
+@page "/country"
+@implements IAsyncDisposable
+@inject ICountryRepository Repository
+@inject IJSRuntime JS
+
+<PageTitle>@(_country is null ? "Choose a country" : _country.Name) | Travel the World</PageTitle>
+
+@if (_country is null)
+{
+    <section id="picker">
+        <h1>Which country do you want to visit?</h1>
+        <p id="pickerMessage">@PickerMessage</p>
+        <div class="flag-row" id="pickerFlags">
+            @foreach (var country in Repository.Countries)
+            {
+                <FlagLink Country="country" />
+            }
+        </div>
+    </section>
+}
+else
+{
+    @* @key rebuilds the page (and replays the animations) when you move to another country *@
+    <div id="countryContent" @key="_country.Key">
+
+        <section id="intro">
+            <img class="bg-map" id="countryMap" src="@_country.Map" alt="@_country.Name map">
+            <div class="country-info">
+                <h1 id="countryTitle" class="visually-hidden">@_country.Name</h1>
+                <div class="flag-box"><img id="countryFlag" src="@_country.Flag" alt="Flag of @_country.Name"></div>
+                <ul class="info-list">
+                    <li><span class="label">Country</span><span class="value" id="infoCountry">@_country.Name</span></li>
+                    <li><span class="label">Capital</span><span class="value" id="infoCapital">@_country.Capital</span></li>
+                    <li>
+                        <span class="label" id="infoLanguageLabel">@(_country.Languages.Length > 1 ? "Languages" : "Language")</span>
+                        <span class="value" id="infoLanguage">@string.Join(" / ", _country.Languages)</span>
+                    </li>
+                    <li><span class="label">Currency</span><span class="value" id="infoCurrency">@_country.Currency</span></li>
+                </ul>
+            </div>
+
+            <div class="quote-box">
+                @* lang and dir make Arabic read right to left and help screen readers *@
+                <p class="quote" id="quoteText" lang="@_country.Quote.Lang" dir="@_country.Quote.Dir">@_country.Quote.Text</p>
+            </div>
+        </section>
+
+        <!-- Did you know? on the left, Food on the right -->
+        <div class="split">
+            <section id="uknow">
+                <div id="uknowBox">
+                    <h2>Did you know?</h2>
+                    <ul class="facts-list" id="factsList">
+                        @for (var i = 0; i < _country.Facts.Length; i++)
+                        {
+                            <li class="reveal-slide" style="--i:@i">@_country.Facts[i]</li>
+                        }
+                    </ul>
+                </div>
+            </section>
+
+            <section id="food">
+                <h2>Local Food</h2>
+                <div class="food-row" id="foodList">
+                    @if (_dishes.Count == 0)
+                    {
+                        <text>No dishes yet.</text>
+                    }
+                    @for (var i = 0; i < _dishes.Count; i++)
+                    {
+                        var dish = _dishes[i];
+                        <div class="food-item reveal-fade" style="--i:@i">
+                            <figure class="arch"><img src="@dish.Image" alt="Dish @dish.Name"></figure>
+                            <div>
+                                <h3>@dish.Name</h3>
+                                <p>@dish.Description</p>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </section>
+        </div>
+
+        <section id="visit">
+            <h2>Where to visit</h2>
+            <div class="visit-grid" id="placesList">
+                @if (_places.Count == 0)
+                {
+                    <text>No places yet.</text>
+                }
+                @for (var i = 0; i < _places.Count; i++)
+                {
+                    var place = _places[i];
+                    <div class="visit-card reveal-fade" style="--i:@i">
+                        <img src="@place.Image" alt="@place.Name image">
+                        <h3>@place.Name</h3>
+                        <p>@place.Description</p>
+                    </div>
+                }
+            </div>
+        </section>
+
+        <section id="more">
+            <a class="country-btn" id="planLink" href="plan?c=@_country.Key">Plan a trip to @_country.Name</a>
+            <h2>Visit another country</h2>
+            <div class="flag-row" id="otherFlags">
+                @foreach (var other in Repository.Countries.Where(c => c.Key != _country.Key))
+                {
+                    <FlagLink Country="other" />
+                }
+            </div>
+        </section>
+    </div>
+}
+
+@code {
+    private TravelTheWorld.Models.Country? _country;
+    private IReadOnlyList<ContentItem> _dishes = Array.Empty<ContentItem>();
+    private IReadOnlyList<ContentItem> _places = Array.Empty<ContentItem>();
+
+    // country.html?c=korea  becomes  /country?c=korea
+    [SupplyParameterFromQuery(Name = "c")]
+    public string? Key { get; set; }
+
+    private string PickerMessage =>
+        string.IsNullOrEmpty(Key)
+            ? "Pick a flag to start your trip."
+            : $"We do not have a page for \"{Key}\" yet. Pick one of these countries:";
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _country = Repository.FindCountry(Key);
+
+        if (_country is null)
+        {
+            _dishes = _places = Array.Empty<ContentItem>();
+            await CallTheme("travelTheme.picker");
+            return;
+        }
+
+        _dishes = Repository.DishesFor(_country.Key);
+        _places = Repository.PlacesFor(_country.Key);
+
+        await CallTheme("travelTheme.set",
+            _country.Key, _country.Accent, _country.HeroBg, _country.HeroGlow);
+    }
+
+    // the colors are only decoration: if the JS is missing, the page must still show
+    private async Task CallTheme(string function, params object?[] args)
+    {
+        try { await JS.InvokeVoidAsync(function, args); }
+        catch (Exception) { }
+    }
+
+    public async ValueTask DisposeAsync() => await CallTheme("travelTheme.leave");
+}

@@ -1,0 +1,12 @@
+<article class="search-card">
+    <img src="@Item.Image" alt="@Item.Name image" loading="lazy" />
+    <span class="search-badge">@Item.Type · @Item.Country.Name</span>
+    <h3>@Item.Name</h3>
+    <p>@Item.Description</p>
+    <a href="@Item.Country.Page">Visit @Item.Country.Name</a>
+</article>
+
+@code {
+    [Parameter, EditorRequired]
+    public SearchItem Item { get; set; } = default!;
+}

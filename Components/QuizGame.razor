@@ -1,0 +1,107 @@
+@inject IJSRuntime JS
+
+<section id="quiz">
+    <h2>Test your knowledge Quiz!!</h2>
+    <p>8 questions about Yemen, South Korea, Kazakhstan and Spain. You have 3 lives!</p>
+    <div class="quiz-card">
+
+        @if (!_quiz.Over)
+        {
+            <!-- the game -->
+            <div id="quiz-game">
+                <div class="quiz-stats">
+                    <span id="quiz-progress">Question @(_quiz.Index + 1) / @_quiz.Questions.Count · @_quiz.Current.Country</span>
+                    <span id="quiz-lives">Lives: @Hearts</span>
+                    <span id="quiz-score">Score: @_quiz.Score</span>
+                </div>
+
+                <h3 id="quiz-question">@_quiz.Current.Text</h3>
+                <div id="quiz-options" class="quiz-options">
+                    @for (var i = 0; i < _quiz.Current.Options.Length; i++)
+                    {
+                        var index = i;
+                        <button type="button" id="quiz-opt-@index" class="@OptionClass(index)"
+                                disabled="@_quiz.Removed.Contains(index)"
+                                @onclick="() => Answer(index)">@_quiz.Current.Options[index]</button>
+                    }
+                </div>
+                <p id="quiz-feedback" class="@FeedbackClass" aria-live="polite">@_quiz.Message</p>
+
+                <div class="quiz-actions">
+                    <button type="button" id="quiz-hint" class="quiz-btn" disabled="@(!_quiz.CanUseHint)"
+                            @onclick="UseHint">50/50 (@_quiz.Hints left)</button>
+                    @if (_quiz.Answered)
+                    {
+                        <button type="button" id="quiz-next" class="quiz-btn quiz-btn-main"
+                                @onclick="Next">@_quiz.NextLabel</button>
+                    }
+                </div>
+            </div>
+        }
+        else
+        {
+            <!-- the end screen -->
+            <div id="quiz-result" class="@("quiz-result " + (_quiz.Won ? "win" : "loss"))">
+                <h3 id="quiz-result-title">@(_quiz.Won ? "You won!" : "Game over")</h3>
+                <p id="quiz-result-text">@ResultText</p>
+                <button type="button" id="quiz-restart" class="quiz-btn quiz-btn-main" @onclick="Restart">Play again</button>
+            </div>
+        }
+
+    </div>
+</section>
+
+@code {
+    private readonly QuizEngine _quiz = new();
+    private string? _focusId;   // element to focus after the next render
+
+    private string Hearts =>
+        new string('♥', _quiz.Lives) + new string('♡', QuizEngine.StartLives - _quiz.Lives);
+
+    private string FeedbackClass =>
+        "quiz-feedback" + (_quiz.MessageType == "" ? "" : " " + _quiz.MessageType);
+
+    private string ResultText => _quiz.Won
+        ? $"Score: {_quiz.Score} / {_quiz.Questions.Count} ({_quiz.Percent}%). Lives left: {_quiz.Lives}."
+        : $"You ran out of lives. Score: {_quiz.Score} / {_quiz.Questions.Count} ({_quiz.Percent}%).";
+
+    private string OptionClass(int i)
+    {
+        var css = "quiz-option";
+        if (_quiz.Removed.Contains(i)) css += " removed";
+        if (_quiz.Answered && i == _quiz.Current.Correct) css += " correct";
+        if (_quiz.Answered && i == _quiz.Chosen && i != _quiz.Current.Correct) css += " wrong";
+        return css;
+    }
+
+    private void Answer(int i)
+    {
+        var alreadyAnswered = _quiz.Answered;
+        _quiz.Answer(i);
+        if (!alreadyAnswered) _focusId = "quiz-next";
+    }
+
+    private void UseHint() => _quiz.UseHint();
+
+    private void Next()
+    {
+        _quiz.Next();
+        _focusId = _quiz.Over ? "quiz-restart" : "quiz-opt-0";
+    }
+
+    private void Restart()
+    {
+        _quiz.Restart();
+        _focusId = "quiz-opt-0";
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (_focusId is not null)
+        {
+            var id = _focusId;
+            _focusId = null;
+            await JS.TryInvokeVoidAsync("travelUi.focusId", id);
+        }
+    }
+}

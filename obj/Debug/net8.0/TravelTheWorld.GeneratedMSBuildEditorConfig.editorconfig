@@ -1,0 +1,108 @@
+is_global = true
+build_property.EnableAotAnalyzer = 
+build_property.EnableSingleFileAnalyzer = 
+build_property.EnableTrimAnalyzer = false
+build_property.IncludeAllContentForSelfExtract = 
+build_property.TargetFramework = net8.0
+build_property.TargetFrameworkIdentifier = .NETCoreApp
+build_property.TargetFrameworkVersion = v8.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = false
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property.EntryPointFilePath = 
+build_property._SupportedPlatformList = browser
+build_property.RootNamespace = TravelTheWorld
+build_property.RootNamespace = TravelTheWorld
+build_property.ProjectDir = C:\Users\SHATHA\OneDrive\Documents\Studing\2nd year\1st semester\IFP\code ifp\TravelTheWorld\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = false
+build_property.RazorLangVersion = 8.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\SHATHA\OneDrive\Documents\Studing\2nd year\1st semester\IFP\code ifp\TravelTheWorld
+build_property._RazorSourceGeneratorDebug = 
+build_property.EffectiveAnalysisLevelStyle = 8.0
+build_property.EnableCodeStyleSeverity = 
+
+[C:/Users/SHATHA/OneDrive/Documents/Studing/2nd year/1st semester/IFP/code ifp/TravelTheWorld/App.razor]
+build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/SHATHA/OneDrive/Documents/Studing/2nd year/1st semester/IFP/code ifp/TravelTheWorld/Components/FactsSection.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xGYWN0c1NlY3Rpb24ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/SHATHA/OneDrive/Documents/Studing/2nd year/1st semester/IFP/code ifp/TravelTheWorld/Components/FlagLink.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xGbGFnTGluay5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/SHATHA/OneDrive/Documents/Studing/2nd year/1st semester/IFP/code ifp/TravelTheWorld/Components/HigherLowerGame.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xIaWdoZXJMb3dlckdhbWUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/SHATHA/OneDrive/Documents/Studing/2nd year/1st semester/IFP/code ifp/TravelTheWorld/Components/MapSection.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xNYXBTZWN0aW9uLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/SHATHA/OneDrive/Documents/Studing/2nd year/1st semester/IFP/code ifp/TravelTheWorld/Components/PlanField.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQbGFuRmllbGQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/SHATHA/OneDrive/Documents/Studing/2nd year/1st semester/IFP/code ifp/TravelTheWorld/Components/PlanSelect.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQbGFuU2VsZWN0LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/SHATHA/OneDrive/Documents/Studing/2nd year/1st semester/IFP/code ifp/TravelTheWorld/Components/QuizGame.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xRdWl6R2FtZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/SHATHA/OneDrive/Documents/Studing/2nd year/1st semester/IFP/code ifp/TravelTheWorld/Components/SearchResultCard.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xTZWFyY2hSZXN1bHRDYXJkLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/SHATHA/OneDrive/Documents/Studing/2nd year/1st semester/IFP/code ifp/TravelTheWorld/Components/SearchSection.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xTZWFyY2hTZWN0aW9uLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/SHATHA/OneDrive/Documents/Studing/2nd year/1st semester/IFP/code ifp/TravelTheWorld/Components/WeatherCard.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xXZWF0aGVyQ2FyZC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/SHATHA/OneDrive/Documents/Studing/2nd year/1st semester/IFP/code ifp/TravelTheWorld/Components/WeatherSection.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xXZWF0aGVyU2VjdGlvbi5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/SHATHA/OneDrive/Documents/Studing/2nd year/1st semester/IFP/code ifp/TravelTheWorld/Layout/MainLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = TGF5b3V0XE1haW5MYXlvdXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/SHATHA/OneDrive/Documents/Studing/2nd year/1st semester/IFP/code ifp/TravelTheWorld/Layout/NavMenu.razor]
+build_metadata.AdditionalFiles.TargetPath = TGF5b3V0XE5hdk1lbnUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/SHATHA/OneDrive/Documents/Studing/2nd year/1st semester/IFP/code ifp/TravelTheWorld/Layout/SiteFooter.razor]
+build_metadata.AdditionalFiles.TargetPath = TGF5b3V0XFNpdGVGb290ZXIucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/SHATHA/OneDrive/Documents/Studing/2nd year/1st semester/IFP/code ifp/TravelTheWorld/Pages/CountryPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ291bnRyeVBhZ2UucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/SHATHA/OneDrive/Documents/Studing/2nd year/1st semester/IFP/code ifp/TravelTheWorld/Pages/Games.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcR2FtZXMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/SHATHA/OneDrive/Documents/Studing/2nd year/1st semester/IFP/code ifp/TravelTheWorld/Pages/Home.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSG9tZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/SHATHA/OneDrive/Documents/Studing/2nd year/1st semester/IFP/code ifp/TravelTheWorld/Pages/Plan.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGxhbi5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/SHATHA/OneDrive/Documents/Studing/2nd year/1st semester/IFP/code ifp/TravelTheWorld/_Imports.razor]
+build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 

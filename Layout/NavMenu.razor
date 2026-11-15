@@ -1,0 +1,39 @@
+<nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">
+            <img src="favicon/apple-touch-icon.png" alt="logo" class="d-inline-block" />
+            <span id="nav-brand">Travel the World</span>
+        </a>
+
+        <button class="navbar-toggler" type="button"
+                aria-controls="navbarNav" aria-expanded="@_expanded.ToString().ToLowerInvariant()"
+                aria-label="Toggle navigation" @onclick="Toggle">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="@NavClass" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <NavLink class="nav-link" href="" Match="NavLinkMatch.All" @onclick="Collapse">Home</NavLink>
+                </li>
+                <li class="nav-item">
+                    <NavLink class="nav-link" href="games" @onclick="Collapse">Games</NavLink>
+                </li>
+                <li class="nav-item">
+                    <NavLink class="nav-link" href="plan" @onclick="Collapse">Plan My Trip</NavLink>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+@code {
+    // Replaces Bootstrap's JS collapse: the menu state lives in C#, so no JS bundle is needed.
+    private bool _expanded;
+
+    private string NavClass => _expanded ? "collapse navbar-collapse show" : "collapse navbar-collapse";
+
+    private void Toggle() => _expanded = !_expanded;
+
+    private void Collapse() => _expanded = false;
+}

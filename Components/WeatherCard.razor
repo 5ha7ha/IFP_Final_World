@@ -1,0 +1,57 @@
+@implements IDisposable
+@inject IWeatherService Weather
+
+<div class="weather-card">
+    <h3>@Name</h3>
+    @if (_failed)
+    {
+        <p class="icon">⏳</p>
+        <p class="temp">--</p>
+        <p class="desc">Weather unavailable</p>
+    }
+    else if (_weather is null)
+    {
+        <p class="icon">⏳</p>
+        <p class="temp">--</p>
+        <p class="desc">Loading...</p>
+    }
+    else
+    {
+        <p class="icon">@_weather.Icon</p>
+        <p class="temp">@Math.Round(_weather.TemperatureC)°C</p>
+        <p class="desc">@_weather.Description</p>
+    }
+</div>
+
+@code {
+    private readonly CancellationTokenSource _cts = new();
+    private WeatherInfo? _weather;
+    private bool _failed;
+
+    [Parameter, EditorRequired] public string Name { get; set; } = string.Empty;
+    [Parameter, EditorRequired] public double Latitude { get; set; }
+    [Parameter, EditorRequired] public double Longitude { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            _weather = await Weather.GetCurrentAsync(Latitude, Longitude, _cts.Token);
+            _failed = _weather is null;
+        }
+        catch (OperationCanceledException)
+        {
+            // Component was removed while the request was in flight; nothing to show.
+        }
+        catch (Exception)
+        {
+            _failed = true; // network down, API error, bad JSON...
+        }
+    }
+
+    public void Dispose()
+    {
+        _cts.Cancel();
+        _cts.Dispose();
+    }
+}

@@ -1,0 +1,73 @@
+@inject ISearchService SearchService
+
+<section id="search">
+    <h2>Search dishes and places</h2>
+
+    <div class="search-bar">
+        <div class="search-field">
+            <label for="searchInput" class="form-label">What are you looking for?</label>
+            <input type="search" class="form-control" id="searchInput"
+                   placeholder="Try paella, canyon, Korea..."
+                   @bind="Query" @bind:event="oninput" />
+        </div>
+        <div class="search-field">
+            <label for="searchType" class="form-label">Show</label>
+            <select class="form-select" id="searchType" @bind="TypeFilter">
+                <option value="all">Everything</option>
+                <option value="Food">Food</option>
+                <option value="Place">Places</option>
+            </select>
+        </div>
+    </div>
+
+    <p id="searchCount" class="search-count" aria-live="polite">@_countText</p>
+
+    <div id="searchResults" class="search-results">
+        @foreach (var item in _results)
+        {
+            <SearchResultCard Item="item" />
+        }
+    </div>
+</section>
+
+@code {
+    private string _query = string.Empty;
+    private string _type = "all";
+    private IReadOnlyList<SearchItem> _results = Array.Empty<SearchItem>();
+    private string _countText = "Type a word to start searching.";
+
+    private string Query
+    {
+        get => _query;
+        set { _query = value; RunSearch(); }
+    }
+
+    private string TypeFilter
+    {
+        get => _type;
+        set { _type = value; RunSearch(); }
+    }
+
+    private void RunSearch()
+    {
+        var text = _query.Trim();
+
+        // nothing typed: show a hint, no cards
+        if (text.Length == 0)
+        {
+            _results = Array.Empty<SearchItem>();
+            _countText = "Type a word to start searching.";
+            return;
+        }
+
+        var type = Enum.TryParse<ItemType>(_type, out var parsed) ? parsed : (ItemType?)null;
+        _results = SearchService.Search(text, type);
+
+        _countText = _results.Count switch
+        {
+            0 => $"Nothing found for \"{text}\". Try another word.",
+            1 => "1 result",
+            var n => $"{n} results"
+        };
+    }
+}
